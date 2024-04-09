@@ -1,10 +1,10 @@
 name: Create a release
-run-name: Publish a ${{ inputs.version_bump }} by @${{ github.actor }}
+run-name: Publish a ${{ inputs.version }} by @${{ github.actor }}
 
 on:
   workflow_dispatch:
     inputs:
-      version_bump:
+      version:
         required: true
         description: Version number to increase for this release. Follows semantic versioning.
         type: choice
@@ -21,7 +21,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      version-number: ${{ steps.bump-version.outputs.message }}
+      message: ${{ steps.bump-version.outputs.message }}
+      version-number: ${{ steps.bump-version.outputs.version-number }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2.5.0
@@ -33,7 +34,10 @@ jobs:
       run: pip install poetry
     - name: Bump version
       id: bump-version
-      run: echo "message=$(poetry version ${{ inputs.version_bump }})" >> $GITHUB_OUTPUT
+      run: |
+        MESSAGE=$(poetry version ${{ inputs.version }})
+        echo "message=${MESSAGE}" >> $GITHUB_OUTPUT
+        echo "version-number=$(echo $MESSAGE | cut -d ' ' -f 6)" >> $GITHUB_OUTPUT
     - name: Build package
       run: poetry build
     - name: Save build artifacts
@@ -91,7 +95,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2.5.0
     - name: Bump version
-      run: poetry version ${{ inputs.version_bump }}
+      run: poetry version ${{ inputs.version }}
     - name: Commit version bump
       uses: EndBug/add-and-commit@v9
       with:
