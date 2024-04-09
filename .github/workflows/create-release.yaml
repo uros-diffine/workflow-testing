@@ -9,9 +9,9 @@ on:
         description: Version number to increase for this release. Follows semantic versioning.
         type: choice
         options:
-        - major
-        - minor
         - patch
+        - minor
+        - major
 
 env:
   AWS_REGION: us-east-1
@@ -97,6 +97,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2.5.0
+    - name: Install project and other required packages
+      run: pip install poetry
     - name: Bump version
       run: poetry version ${{ inputs.version }}
     - name: Commit version bump
