@@ -1,0 +1,27 @@
+changelog:
+  categories:
+    - title: 🎉 What's New
+      labels:
+      - type:new
+      - type:change
+      - type:update
+      exclude:
+        labels:
+        - cat:github
+        - cat:other
+        - cat:tests
+    - title: 🪳 Bug Fixes
+      labels:
+      - type:bug
+      exclude:
+        labels:
+        - cat:github
+        - cat:other
+        - cat:tests
+    - title: 🤖 Dependencies
+      labels:
+      - dependencies
+    - title: ⁉️ Misc.
+      labels:
+      - "*"
+
