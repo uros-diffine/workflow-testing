@@ -1,5 +1,5 @@
 name: Create a release
-run-name: Deploy to ${{ inputs.version_bump }} by @${{ github.actor }}
+run-name: Publish a ${{ inputs.version_bump }} by @${{ github.actor }}
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v2.3.3
       with:
-        python-version: '3.10'
+        python-version: '3.11'
     - name: Install project and other required packages
       run: pip install poetry
     - name: Bump version
